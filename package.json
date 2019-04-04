@@ -1,0 +1,24 @@
+{
+  "name": "@xxsnakerxx/react-native-components",
+  "version": "1.0.0",
+  "description": "Some components for React Native",
+  "repository": "https://github.com/xxsnakerxx/react-native-components.git",
+  "author": "Dmitriy Kolesnikov <xxsnakerxx@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "yarn lint && jest",
+    "lint": "eslint ./",
+    "preversion": "npm test"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@xxsnakerxx/eslint-config": "^1.0.1",
+    "babel-jest": "^24.7.1",
+    "eslint": "^5.16.0",
+    "jest-cli": "^24.7.1",
+    "prop-types": "^15.7.2",
+    "react": "16.8.3",
+    "react-native": "^0.59.3",
+    "react-test-renderer": "16.8.3"
+  }
+}

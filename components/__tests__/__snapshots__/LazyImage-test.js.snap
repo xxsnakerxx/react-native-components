@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LazyImage renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "height": 40,
+        "width": 40,
+      },
+      Object {
+        "overflow": "hidden",
+      },
+    ]
+  }
+>
+  <Text>
+    Placeholder
+  </Text>
+  <Image
+    onError={[Function]}
+    onLoad={[Function]}
+    resizeMode="cover"
+    source={
+      Object {
+        "uri": "https://pic.com/1",
+      }
+    }
+    style={
+      Object {
+        "borderRadius": 20,
+        "bottom": 0,
+        "left": 0,
+        "opacity": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`LazyImage renders correctly when loaded 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "height": 40,
+        "width": 40,
+      },
+      Object {
+        "overflow": "hidden",
+      },
+    ]
+  }
+>
+  <Text>
+    Placeholder
+  </Text>
+  <Image
+    onError={[Function]}
+    onLoad={[Function]}
+    resizeMode="cover"
+    source={
+      Object {
+        "uri": "https://pic.com/1",
+      }
+    }
+    style={
+      Object {
+        "borderRadius": 20,
+        "bottom": 0,
+        "left": 0,
+        "opacity": 1,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`LazyImage renders correctly when reseted 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "height": 40,
+        "width": 40,
+      },
+      Object {
+        "overflow": "hidden",
+      },
+    ]
+  }
+>
+  <Text>
+    Placeholder
+  </Text>
+  <Image
+    onError={[Function]}
+    onLoad={[Function]}
+    resizeMode="cover"
+    source={null}
+    style={
+      Object {
+        "borderRadius": 20,
+        "bottom": 0,
+        "left": 0,
+        "opacity": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      }
+    }
+  />
+</View>
+`;
