@@ -1,9 +1,6 @@
-.gitignore
-.git*
 .eslintignore
 babel.config.js
-npm-shrinkwrap.json
-node_modules
 jest*
 __tests__
 __mocks__
+yarn.lock
