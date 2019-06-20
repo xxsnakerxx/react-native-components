@@ -90,6 +90,8 @@ export default class LazyImage extends React.Component {
       onLoad,
     } = this.props;
 
+    if (!src) return;
+
     this.setState({
       loaded: true,
     });
