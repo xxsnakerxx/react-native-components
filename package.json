@@ -12,14 +12,14 @@
     "preversion": "npm test"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@xxsnakerxx/eslint-config": "^1.0.1",
-    "babel-jest": "^24.7.1",
+    "@babel/core": "^7.4.5",
+    "@xxsnakerxx/eslint-config": "^1.0.2",
+    "babel-jest": "^24.8.0",
     "eslint": "^5.16.0",
-    "jest-cli": "^24.7.1",
+    "jest-cli": "^24.8.0",
     "prop-types": "^15.7.2",
     "react": "16.8.3",
-    "react-native": "^0.59.3",
+    "react-native": "^0.59.9",
     "react-test-renderer": "16.8.3"
   }
 }
