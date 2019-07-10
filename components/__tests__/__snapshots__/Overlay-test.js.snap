@@ -44,6 +44,8 @@ exports[`Overlay renders correctly when visible 1`] = `
   >
     <View
       accessible={true}
+      clickable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -102,6 +104,8 @@ exports[`Overlay renders correctly with defaults 1`] = `
   >
     <View
       accessible={true}
+      clickable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -175,6 +179,8 @@ exports[`Overlay renders correctly with layer 1`] = `
   >
     <View
       accessible={true}
+      clickable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
