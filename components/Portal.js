@@ -46,8 +46,12 @@ export default class Portal extends React.Component {
     return _portalRef._getOpenModals();
   }
 
-  state = {
-    modals: {},
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modals: {},
+    };
   }
 
   _showModal(tag, component) {
@@ -105,7 +109,7 @@ export default class Portal extends React.Component {
         style={styles.modalsContainer}
         pointerEvents="box-none"
       >
-        {Object.keys(modals).map(tag => ({ ...modals[tag], key: tag }))}
+        {Object.keys(modals).map((tag) => ({ ...modals[tag], key: tag }))}
       </View>
     );
   }

@@ -32,31 +32,33 @@ const Button = (props) => {
     <TouchableOpacity
       style={isTextButton ? containerStyle : null}
       activeOpacity={!touchableProps.onPress ? 1 : undefined}
+      // eslint-disable-next-line react/jsx-props-no-spreading
       {...touchableProps}
     >
-      {isTextButton
-        ? (
-          <Text
-            style={[
-              styles.text,
-              textStyle,
-              _disabledStyle,
-              _disabledTextStyle,
-            ]}
-          >
-            {children}
-          </Text>
-        )
-        : (
-          <View
-            style={[
-              _disabledStyle,
-              !isTextButton ? containerStyle : {},
-            ]}
-          >
-            {children}
-          </View>
-        )
+      {
+        isTextButton
+          ? (
+            <Text
+              style={[
+                styles.text,
+                textStyle,
+                _disabledStyle,
+                _disabledTextStyle,
+              ]}
+            >
+              {children}
+            </Text>
+          )
+          : (
+            <View
+              style={[
+                _disabledStyle,
+                !isTextButton ? containerStyle : {},
+              ]}
+            >
+              {children}
+            </View>
+          )
       }
     </TouchableOpacity>
   );

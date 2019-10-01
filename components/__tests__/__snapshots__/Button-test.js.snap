@@ -3,7 +3,7 @@
 exports[`Button renders correctly with complex children 1`] = `
 <View
   accessible={true}
-  clickable={false}
+  focusable={false}
   isTVSelectable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -40,7 +40,7 @@ exports[`Button renders correctly with complex children 1`] = `
 exports[`Button renders correctly with complex children and disabled 1`] = `
 <View
   accessible={true}
-  clickable={false}
+  focusable={false}
   isTVSelectable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -79,7 +79,7 @@ exports[`Button renders correctly with complex children and disabled 1`] = `
 exports[`Button renders correctly with text 1`] = `
 <View
   accessible={true}
-  clickable={false}
+  focusable={false}
   isTVSelectable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -117,7 +117,7 @@ exports[`Button renders correctly with text 1`] = `
 exports[`Button renders correctly with text and disabled 1`] = `
 <View
   accessible={true}
-  clickable={false}
+  focusable={false}
   isTVSelectable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}

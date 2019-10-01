@@ -143,30 +143,33 @@ export default class Overlay extends React.Component {
             },
           ]}
         >
-          {layer && React.isValidElement(layer)
-            ? React.cloneElement(layer, {
-              style: styles.overlay,
-            })
-            : null
+          {
+            layer && React.isValidElement(layer)
+              ? React.cloneElement(layer, {
+                style: styles.overlay,
+              })
+              : null
           }
-          {spinner
-            ? this._renderSpinner()
-            : null
+          {
+            spinner
+              ? this._renderSpinner()
+              : null
           }
         </Animated.View>
-        {!spinner
-          ? (
-            <View style={styles.flexContainer}>
-              <TouchableWithoutFeedback
-                onPress={this._onPress}
-                style={styles.overlay}
-              >
-                <View style={styles.flexContainer} />
-              </TouchableWithoutFeedback>
-              {children}
-            </View>
-          )
-          : null
+        {
+          !spinner
+            ? (
+              <View style={styles.flexContainer}>
+                <TouchableWithoutFeedback
+                  onPress={this._onPress}
+                  style={styles.overlay}
+                >
+                  <View style={styles.flexContainer} />
+                </TouchableWithoutFeedback>
+                {children}
+              </View>
+            )
+            : null
         }
       </View>
     );
