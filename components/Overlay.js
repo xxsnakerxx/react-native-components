@@ -121,11 +121,17 @@ export default class Overlay extends React.Component {
           } : {},
         ]}
       >
-        <StatusBar
-          animated
-          barStyle="light-content"
-          backgroundColor={backgroundColor}
-        />
+        {
+          modal
+            ? (
+              <StatusBar
+                animated
+                barStyle="light-content"
+                backgroundColor={backgroundColor}
+              />
+            )
+            : null
+        }
         <Animated.View
           style={[
             styles.overlay,
