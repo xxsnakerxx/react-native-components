@@ -9,7 +9,7 @@
   "scripts": {
     "test": "yarn lint && jest",
     "lint": "eslint ./",
-    "release": "yarn publish && git push && git push --tags"
+    "release": "yarn test && yarn publish && git push && git push --tags"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
