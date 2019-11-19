@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "target": "esnext",
+    "jsx": "react-native",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "baseUrl": ".",
+  },
+  "include": [
+    "./components/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.js"
+  ]
+}

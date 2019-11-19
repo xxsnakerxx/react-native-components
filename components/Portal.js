@@ -15,45 +15,74 @@ import {
   View,
 } from 'react-native';
 
-let _portalRef;
-let lastUsedTag = 0;
+/** @type Portal */
+let portalRef;
 
+let counter = 0;
+
+/**
+ * @typedef {import("react").ReactElement<any>} ReactElement
+ */
+
+/**
+ * @class Portal
+ * @extends {React.Component<any>}
+ */
 export default class Portal extends React.Component {
   // eslint-disable-next-line no-plusplus
-  static allocateTag = () => `__modal_${++lastUsedTag}`;
+  static allocateTag = () => `__modal_${++counter}`;
 
+  /**
+   * @param {string} tag
+   * @param {ReactElement} component
+   */
   static showModal = (tag, component) => {
-    if (!_portalRef) {
+    if (!portalRef) {
       throw new Error('Calling showModal but no Portal has been rendered.');
     }
 
-    _portalRef._showModal(tag, component);
+    portalRef._showModal(tag, component);
   }
 
+  /**
+   * @param {string} tag
+   */
   static closeModal = (tag) => {
-    if (!_portalRef) {
+    if (!portalRef) {
       throw new Error('Calling closeModal but no Portal has been rendered.');
     }
 
-    _portalRef._closeModal(tag);
+    portalRef._closeModal(tag);
   }
 
   static getOpenModals = () => {
-    if (!_portalRef) {
+    if (!portalRef) {
       throw new Error('Calling getOpenModals but no Portal has been rendered.');
     }
 
-    return _portalRef._getOpenModals();
+    return portalRef._getOpenModals();
   }
 
   constructor(props) {
     super(props);
 
+    portalRef = this;
+
     this.state = {
+      /** @type {Object<string,ReactElement>} */
       modals: {},
     };
   }
 
+  componentWillUnmount() {
+    portalRef = null;
+    counter = 0;
+  }
+
+  /**
+   * @param {string} tag
+   * @param {ReactElement} component
+   */
   _showModal(tag, component) {
     const {
       modals,
@@ -67,6 +96,9 @@ export default class Portal extends React.Component {
     });
   }
 
+  /**
+   * @param {string} tag
+   */
   _closeModal(tag) {
     const {
       modals,
@@ -97,8 +129,6 @@ export default class Portal extends React.Component {
     const {
       modals,
     } = this.state;
-
-    _portalRef = this;
 
     if (!Object.keys(modals).length) {
       return null;

@@ -3,57 +3,85 @@ import React from 'react';
 import {
   TouchableOpacity,
   View,
-  ViewPropTypes,
   Text,
   StyleSheet,
 } from 'react-native';
 
-const Button = (props) => {
-  const touchableProps = { ...props };
-  delete touchableProps.style;
-  delete touchableProps.disabledStyle;
-  delete touchableProps.disabledTextStyle;
-  delete touchableProps.children;
+/**
+ * @typedef {import("react-native").GestureResponderEvent} GestureResponderEvent
+ * @typedef {import("react-native").ImageLoadEventData} ImageLoadEventData
+ * @typedef {import("react-native").NativeSyntheticEvent<ImageLoadEventData>} OnLoadEvent
+ * @typedef {import("react-native").ViewProps} ViewProps
+ * @typedef {import("react-native").ViewStyle} ViewStyle
+ * @typedef {import("react-native").StyleProp<ViewStyle>} ViewStyleProp
+ * @typedef {import("react-native").TextStyle} TextStyle
+ * @typedef {import("react-native").StyleProp<TextStyle>} TextStyleProp
+ * @typedef {import("react-native").TouchableOpacityProps} TouchableOpacityProps
+ * @typedef {import("react").Props} Props
+ *
+ * @typedef ButtonProps
+ * @prop {boolean} [isDisabled=false]
+ * @prop {ViewStyleProp} [containerStyle=null]
+ * @prop {TextStyleProp} [textStyle=null]
+ * @prop {ViewStyleProp} [disabledContainerStyle=null]
+ * @prop {TextStyleProp} [disabledTextStyle=null]
+ */
 
+/**
+ * @param {TouchableOpacityProps & ButtonProps & Props} props
+ */
+const Button = (props) => {
   const {
-    children,
+    isDisabled,
     containerStyle,
     textStyle,
-    disabledStyle,
+    disabledContainerStyle,
     disabledTextStyle,
-    disabled,
+    children,
+    ...touchableProps
   } = props;
 
-  const _disabledStyle = disabled ? disabledStyle : null;
-  const _disabledTextStyle = disabled ? disabledTextStyle : null;
+  const _disabledContainerStyle = isDisabled ? disabledContainerStyle : null;
+  const _disabledTextStyle = isDisabled ? disabledTextStyle : null;
+
   const isTextButton = typeof children === 'string';
 
   return (
     <TouchableOpacity
-      style={isTextButton ? containerStyle : null}
+      testID="Button"
       activeOpacity={!touchableProps.onPress ? 1 : undefined}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...touchableProps}
+      onPress={!isDisabled ? touchableProps.onPress : undefined}
+      onPressIn={!isDisabled ? touchableProps.onPressIn : undefined}
+      onPressOut={!isDisabled ? touchableProps.onPressOut : undefined}
+      onLongPress={!isDisabled ? touchableProps.onLongPress : undefined}
     >
       {
         isTextButton
           ? (
-            <Text
+            <View
               style={[
-                styles.text,
-                textStyle,
-                _disabledStyle,
-                _disabledTextStyle,
+                containerStyle,
+                _disabledContainerStyle,
               ]}
             >
-              {children}
-            </Text>
+              <Text
+                style={[
+                  styles.text,
+                  textStyle,
+                  _disabledTextStyle,
+                ]}
+              >
+                {children}
+              </Text>
+            </View>
           )
           : (
             <View
               style={[
-                _disabledStyle,
-                !isTextButton ? containerStyle : {},
+                containerStyle,
+                _disabledContainerStyle,
               ]}
             >
               {children}
@@ -64,20 +92,11 @@ const Button = (props) => {
   );
 };
 
-Button.propTypes = {
-  /* eslint-disable react/no-typos */
-  textStyle: Text.propTypes.style,
-  containerStyle: ViewPropTypes.style,
-  disabledStyle: ViewPropTypes.style,
-  disabledTextStyle: Text.propTypes.style,
-  /* eslint-enable react/no-typos */
-  ...TouchableOpacity.propTypes,
-};
-
 Button.defaultProps = {
+  isDisabled: false,
   textStyle: null,
   containerStyle: null,
-  disabledStyle: null,
+  disabledContainerStyle: null,
   disabledTextStyle: null,
 };
 

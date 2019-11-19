@@ -1,106 +1,84 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
   StyleSheet,
   View,
-  ViewPropTypes,
   Animated,
-  Image,
   Platform,
 } from 'react-native';
 
-const sourceIsSame = (src1, src2) => JSON.stringify(src1) === JSON.stringify(src2);
+/**
+ * @typedef {import("react-native").GestureResponderEvent} GestureResponderEvent
+ * @typedef {import("react-native").ImageLoadEventData} ImageLoadEventData
+ * @typedef {import("react-native").NativeSyntheticEvent<ImageLoadEventData>} OnLoadEvent
+ * @typedef {import("react-native").ViewStyle} ViewStyle
+ * @typedef {import("react-native").StyleProp<ViewStyle>} ViewStyleProp
+ * @typedef {import("react-native").ImageProps} ImageProps
+ * @typedef {import("react").ReactElement<any>} Element
+ *
+ * @typedef Props
+ * @prop {Element} [placeholder]
+ * @prop {ViewStyleProp} [containerStyle=null]
+ *
+ * @typedef {ImageProps & Props} LazyImageProps
+ */
 
+/**
+ * @class LazyImage
+ * @extends {React.Component<LazyImageProps>}
+ */
 export default class LazyImage extends React.Component {
-  static cache = [];
-
-  static propTypes = {
-    containerStyle: ViewPropTypes.style,
-    style: Image.propTypes.style, // eslint-disable-line react/forbid-foreign-prop-types
-    source: Image.propTypes.source, // eslint-disable-line react/forbid-foreign-prop-types
-    placeholder: PropTypes.node,
-    autoLoad: PropTypes.bool,
-    resizeMode: PropTypes.string,
-    onLoad: PropTypes.func,
-    onError: PropTypes.func,
-  };
-
   static defaultProps = {
-    containerStyle: null,
-    style: null,
-    source: null,
     placeholder: null,
-    autoLoad: true,
+    containerStyle: null,
     resizeMode: 'cover',
     onLoad: () => {},
-    onError: () => {},
+    onLoadStart: () => {},
   }
 
+  /**
+   * @param {LazyImageProps} props
+   */
   constructor(props) {
     super(props);
 
     this.state = {
-      loaded: false,
-      src: null,
       opacity: new Animated.Value(0),
     };
   }
 
-  componentDidMount() {
-    const {
-      autoLoad,
-    } = this.props;
-
-    if (autoLoad) {
-      this.load();
-    }
+  /**
+   * @param {LazyImageProps} nextProps
+   */
+  shouldComponentUpdate(nextProps) {
+    return JSON.stringify(nextProps) !== JSON.stringify(this.props);
   }
 
-  componentDidUpdate(prevProps) {
+  _onLoadStart = () => {
     const {
-      source,
-      autoLoad,
+      opacity,
+    } = this.state;
+
+    const {
+      onLoadStart,
     } = this.props;
 
-    if (!sourceIsSame(prevProps.source, source)) {
-      this.reset();
-    }
+    opacity.setValue(0);
 
-    if (autoLoad) {
-      this.load();
-    }
+    onLoadStart();
   }
 
-  _onLoadError = () => {
+  /**
+   * @param {OnLoadEvent} e
+   */
+  _onLoad = (e) => {
     const {
-      onError,
-    } = this.props;
-
-    onError(this);
-  };
-
-  _onLoad = () => {
-    const {
-      src,
       opacity,
     } = this.state;
 
     const {
       onLoad,
     } = this.props;
-
-    if (!src) return;
-
-    this.setState({
-      loaded: true,
-    });
-
-    const loadedFromCache = LazyImage.cache.includes(JSON.stringify(src));
-
-    if (!loadedFromCache) {
-      LazyImage.cache.push(JSON.stringify(src));
-    }
 
     requestAnimationFrame(() => {
       Animated.timing(opacity,
@@ -110,64 +88,27 @@ export default class LazyImage extends React.Component {
           useNativeDriver: Platform.OS === 'ios',
         },
       ).start(() => {
-        onLoad(this);
+        onLoad(e);
       });
     });
   };
 
-  load() {
-    const {
-      source,
-    } = this.props;
-
-    const {
-      loaded,
-      src,
-    } = this.state;
-
-    if (!loaded && !sourceIsSame(source, src)) {
-      this.setState({
-        src: source,
-      });
-    }
-  }
-
-  isLoaded() {
-    const {
-      loaded,
-    } = this.state;
-
-    return loaded;
-  }
-
-  reset(cb) {
-    const {
-      opacity,
-    } = this.state;
-
-    opacity.setValue(0);
-
-    this.setState({
-      loaded: false,
-      src: null,
-    }, cb);
-  }
-
   render() {
     const {
       containerStyle,
-      style,
       placeholder,
-      resizeMode,
+      ...imageProps
     } = this.props;
 
+    const { style } = imageProps;
+
     const {
-      src,
       opacity,
     } = this.state;
 
     return (
       <View
+        testID="LazyImage"
         style={[
           containerStyle,
           styles.container,
@@ -175,7 +116,11 @@ export default class LazyImage extends React.Component {
       >
         {placeholder}
         <Animated.Image
-          source={src || null}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...imageProps}
+          testID="LazyImage-Image"
+          onLoad={this._onLoad}
+          onLoadStart={this._onLoadStart}
           style={[
             styles.image,
             style,
@@ -183,9 +128,6 @@ export default class LazyImage extends React.Component {
               opacity,
             },
           ]}
-          resizeMode={resizeMode}
-          onError={this._onLoadError}
-          onLoad={this._onLoad}
         />
       </View>
     );

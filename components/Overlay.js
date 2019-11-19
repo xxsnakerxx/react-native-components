@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {
   StyleSheet,
   Animated,
   View,
-  ViewPropTypes,
   TouchableWithoutFeedback,
   ActivityIndicator,
   StatusBar,
@@ -13,56 +11,76 @@ import {
 
 import Modal from './Modal';
 
-export default class Overlay extends React.Component {
-  static propTypes = {
-    style: ViewPropTypes.style,
-    modal: PropTypes.bool,
-    spinner: PropTypes.bool,
-    spinnerColor: PropTypes.string,
-    backgroundColor: PropTypes.string,
-    visible: PropTypes.bool,
-    layer: PropTypes.object,
-    onPress: PropTypes.func,
-  }
+/**
+ * @typedef {import("react-native").GestureResponderEvent} GestureResponderEvent
+ * @typedef {import("react-native").ViewStyle} ViewStyle
+ * @typedef {import("react-native").StyleProp<ViewStyle>} ViewStyleProp
+ * @typedef {import("react").Props} ReactProps
+ *
+ * @typedef OverlayProps
+ * @prop {boolean} [isVisible=false]
+ * @prop {boolean} [isModal=false]
+ * @prop {boolean} [showSpinner=false]
+ * @prop {string} [spinnerColor="white"]
+ * @prop {string} [backgroundColor="rgba(0, 0, 0, 0.75)"]
+ * @prop {ViewStyleProp} [style=null]
+ * @prop {(e:GestureResponderEvent) => void} [onPress]
+ * @prop {() => void} [onShow]
+ * @prop {() => void} [onHide]
+ *
+ * @typedef {OverlayProps & ReactProps} Props
+ */
 
+/**
+ * @class Overlay
+ * @extends {React.Component<Props>}
+ */
+export default class Overlay extends React.Component {
   static defaultProps = {
-    style: null,
-    modal: false,
-    spinner: false,
-    visible: false,
+    isVisible: false,
+    isModal: false,
+    showSpinner: false,
     spinnerColor: 'white',
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
-    layer: null,
+    style: null,
     onPress: () => {},
+    onShow: () => {},
+    onHide: () => {},
   }
 
+  /**
+   * @param {Props} props
+   */
   constructor(props) {
     super(props);
 
     this.state = {
-      visible: false,
+      isVisible: false,
       opacity: new Animated.Value(0),
     };
   }
 
   componentDidMount() {
     const {
-      visible,
+      isVisible,
     } = this.props;
 
-    if (visible) this.show();
+    if (isVisible) this.show();
   }
 
+  /**
+   * @param {Props} prevProps
+   */
   componentDidUpdate(prevProps) {
     const {
-      visible,
+      isVisible,
     } = this.props;
 
-    if (visible && !prevProps.visible) {
+    if (isVisible && !prevProps.isVisible) {
       this.show();
     }
 
-    if (!visible && prevProps.visible) {
+    if (!isVisible && prevProps.isVisible) {
       this.hide();
     }
   }
@@ -79,50 +97,56 @@ export default class Overlay extends React.Component {
     const { spinnerColor } = this.props;
 
     return (
-      <View style={styles.spinnerContainer}>
+      <View
+        testID="SpinnerContainer"
+        style={styles.spinnerContainer}
+      >
         <ActivityIndicator color={spinnerColor} size="large" />
       </View>
     );
   };
 
-  _onPress = () => {
+  /**
+   * @param {GestureResponderEvent} e
+   */
+  _onPress = (e) => {
     const {
       onPress,
     } = this.props;
 
-    onPress();
+    onPress(e);
   }
 
   _renderOverlay = () => {
     const {
       style,
-      layer,
-      spinner,
-      modal,
+      showSpinner,
+      isModal,
       backgroundColor,
       children,
     } = this.props;
 
     const {
-      visible,
+      isVisible,
       opacity,
     } = this.state;
 
     return (
       <View
-        pointerEvents={visible ? 'auto' : 'none'}
-        removeClippedSubviews={!visible}
+        testID="Overlay"
+        pointerEvents={isVisible ? 'auto' : 'none'}
+        removeClippedSubviews={!isVisible}
         style={[
           styles.overlay,
           // eslint-disable-next-line react-native/no-inline-styles
-          !modal ? {
-            opacity: +!!visible,
-            overflow: visible ? 'visible' : 'hidden',
+          !isModal ? {
+            opacity: +!!isVisible,
+            overflow: isVisible ? 'visible' : 'hidden',
           } : {},
         ]}
       >
         {
-          modal
+          isModal
             ? (
               <StatusBar
                 animated
@@ -135,42 +159,27 @@ export default class Overlay extends React.Component {
         <Animated.View
           style={[
             styles.overlay,
-            // eslint-disable-next-line react-native/no-inline-styles
-            {
-              backgroundColor:
-              layer && React.isValidElement(layer)
-                ? 'transparent'
-                : backgroundColor,
-            },
+            { backgroundColor },
             style,
-            {
-              opacity,
-
-            },
+            { opacity },
           ]}
         >
           {
-            layer && React.isValidElement(layer)
-              ? React.cloneElement(layer, {
-                style: styles.overlay,
-              })
-              : null
-          }
-          {
-            spinner
+            showSpinner
               ? this._renderSpinner()
               : null
           }
         </Animated.View>
         {
-          !spinner
+          !showSpinner
             ? (
-              <View style={styles.flexContainer}>
+              <View style={styles.flex1}>
                 <TouchableWithoutFeedback
+                  testID="PressHandler"
                   onPress={this._onPress}
                   style={styles.overlay}
                 >
-                  <View style={styles.flexContainer} />
+                  <View style={styles.flex1} />
                 </TouchableWithoutFeedback>
                 {children}
               </View>
@@ -181,13 +190,17 @@ export default class Overlay extends React.Component {
     );
   }
 
-  show(cb) {
+  show() {
+    const {
+      onShow,
+    } = this.props;
+
     const {
       opacity,
     } = this.state;
 
     this.setState({
-      visible: true,
+      isVisible: true,
     });
 
     Animated.timing(opacity, {
@@ -195,11 +208,15 @@ export default class Overlay extends React.Component {
       duration: 300,
       useNativeDriver: true,
     }).start(() => {
-      if (cb) cb();
+      onShow();
     });
   }
 
-  hide(cb) {
+  hide() {
+    const {
+      onHide,
+    } = this.props;
+
     const {
       opacity,
     } = this.state;
@@ -211,27 +228,30 @@ export default class Overlay extends React.Component {
     }).start(({ finished }) => {
       if (finished) {
         this.setState({
-          visible: false,
+          isVisible: false,
         });
-      }
 
-      if (cb) cb();
+        onHide();
+      }
     });
   }
 
   render() {
     const {
-      modal,
+      isModal,
     } = this.props;
 
     const {
-      visible,
+      isVisible,
     } = this.state;
 
-    return !modal
+    return !isModal
       ? this._renderOverlay()
       : (
-        <Modal visible={visible}>
+        <Modal
+          isVisible={isVisible}
+          isAnimated={false}
+        >
           {this._renderOverlay()}
         </Modal>
       );
@@ -239,6 +259,9 @@ export default class Overlay extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
   },
@@ -246,8 +269,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  flexContainer: {
-    flex: 1,
   },
 });
