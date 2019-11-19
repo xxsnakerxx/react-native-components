@@ -1165,10 +1165,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@xxsnakerxx/eslint-config@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@xxsnakerxx/eslint-config/-/eslint-config-1.1.3.tgz#b9c561647c224b342d9460fb734de1c3ca6fdcf0"
-  integrity sha512-TfUZ5ufTdI58UPYg7Uknjmzf1ANQrqaYpZTCRBVgCqfO/LNXYx3fMF6RsLqlYnTA1BNk8gtPBqEACnfXyOii7g==
+"@xxsnakerxx/eslint-config@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@xxsnakerxx/eslint-config/-/eslint-config-1.1.4.tgz#861a3ba5bd4488975319750f58a21940f99090ad"
+  integrity sha512-ThEiUSw3uymmGO2TGOXPXrOLKMi3+WEM5cfoxjBcuYk/739NMgaRLOPOuqDv4PsqhihKwSLZ5ILZCFptoANQMA==
   dependencies:
     babel-eslint "^10.0.3"
     eslint-config-airbnb "^18.0.1"
