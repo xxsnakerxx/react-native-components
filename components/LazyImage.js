@@ -14,6 +14,7 @@ import {
  * @typedef {import("react-native").ViewStyle} ViewStyle
  * @typedef {import("react-native").StyleProp<ViewStyle>} ViewStyleProp
  * @typedef {import("react-native").ImageProps} ImageProps
+ * @typedef {import("react-native").ImageSourcePropType} ImageSourcePropType
  * @typedef {import("react").ReactElement<any>} Element
  *
  * @typedef Props
@@ -22,6 +23,35 @@ import {
  *
  * @typedef {ImageProps & Props} LazyImageProps
  */
+
+const cache = [];
+
+/**
+ * @param {ImageSourcePropType} source
+ * @returns boolean
+ */
+const sourceIsCached = (source) => {
+  if (!source) return false;
+
+  if (typeof source !== 'number' && !Array.isArray(source)) {
+    return cache.includes(source.uri);
+  }
+
+  return cache.includes(source);
+};
+
+/**
+ * @param {ImageSourcePropType} source
+ */
+const cacheSource = (source) => {
+  if (!source) return;
+
+  if (typeof source !== 'number' && !Array.isArray(source)) {
+    cache.push(source.uri);
+  }
+
+  cache.push(source);
+};
 
 /**
  * @class LazyImage
@@ -43,7 +73,7 @@ export default class LazyImage extends React.PureComponent {
     super(props);
 
     this.state = {
-      opacity: new Animated.Value(0),
+      opacity: new Animated.Value(+sourceIsCached(props.source)),
     };
   }
 
@@ -54,9 +84,10 @@ export default class LazyImage extends React.PureComponent {
 
     const {
       onLoadStart,
+      source,
     } = this.props;
 
-    opacity.setValue(0);
+    opacity.setValue(+sourceIsCached(source));
 
     onLoadStart();
   }
@@ -71,19 +102,26 @@ export default class LazyImage extends React.PureComponent {
 
     const {
       onLoad,
+      source,
     } = this.props;
 
-    requestAnimationFrame(() => {
-      Animated.timing(opacity,
-        {
-          toValue: 1,
-          duration: 300,
-          useNativeDriver: Platform.OS === 'ios',
-        },
-      ).start(() => {
-        onLoad(e);
+    if (sourceIsCached(source)) {
+      opacity.setValue(1);
+    } else {
+      cacheSource(source);
+
+      requestAnimationFrame(() => {
+        Animated.timing(opacity,
+          {
+            toValue: 1,
+            duration: 300,
+            useNativeDriver: Platform.OS === 'ios',
+          },
+        ).start(() => {
+          onLoad(e);
+        });
       });
-    });
+    }
   };
 
   render() {
