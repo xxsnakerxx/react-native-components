@@ -57,7 +57,7 @@ describe('Button', () => {
 
     const { queryByTestId } = render(
       <Button
-        isDisabled
+        disabled
         onPress={() => { pressed = true; }}
       >
         Text

@@ -17,22 +17,22 @@ import {
  * @typedef {import("react-native").TextStyle} TextStyle
  * @typedef {import("react-native").StyleProp<TextStyle>} TextStyleProp
  * @typedef {import("react-native").TouchableOpacityProps} TouchableOpacityProps
- * @typedef {import("react").Props} Props
+ * @typedef {import("react").Props} ReactProps
  *
  * @typedef ButtonProps
- * @prop {boolean} [isDisabled=false]
  * @prop {ViewStyleProp} [containerStyle=null]
  * @prop {TextStyleProp} [textStyle=null]
  * @prop {ViewStyleProp} [disabledContainerStyle=null]
  * @prop {TextStyleProp} [disabledTextStyle=null]
+ *
+ * @typedef {TouchableOpacityProps & ButtonProps & ReactProps} Props
  */
 
 /**
- * @param {TouchableOpacityProps & ButtonProps & Props} props
+ * @param {Props} props
  */
 const Button = (props) => {
   const {
-    isDisabled,
     containerStyle,
     textStyle,
     disabledContainerStyle,
@@ -41,8 +41,8 @@ const Button = (props) => {
     ...touchableProps
   } = props;
 
-  const _disabledContainerStyle = isDisabled ? disabledContainerStyle : null;
-  const _disabledTextStyle = isDisabled ? disabledTextStyle : null;
+  const _disabledContainerStyle = touchableProps.disabled ? disabledContainerStyle : null;
+  const _disabledTextStyle = touchableProps.disabled ? disabledTextStyle : null;
 
   const isTextButton = typeof children === 'string';
 
@@ -52,10 +52,6 @@ const Button = (props) => {
       activeOpacity={!touchableProps.onPress ? 1 : undefined}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...touchableProps}
-      onPress={!isDisabled ? touchableProps.onPress : undefined}
-      onPressIn={!isDisabled ? touchableProps.onPressIn : undefined}
-      onPressOut={!isDisabled ? touchableProps.onPressOut : undefined}
-      onLongPress={!isDisabled ? touchableProps.onLongPress : undefined}
     >
       {
         isTextButton
@@ -93,7 +89,6 @@ const Button = (props) => {
 };
 
 Button.defaultProps = {
-  isDisabled: false,
   textStyle: null,
   containerStyle: null,
   disabledContainerStyle: null,
