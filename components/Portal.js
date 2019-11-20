@@ -26,9 +26,9 @@ let counter = 0;
 
 /**
  * @class Portal
- * @extends {React.Component<any>}
+ * @extends {React.PureComponent<any>}
  */
-export default class Portal extends React.Component {
+export default class Portal extends React.PureComponent {
   // eslint-disable-next-line no-plusplus
   static allocateTag = () => `__modal_${++counter}`;
 

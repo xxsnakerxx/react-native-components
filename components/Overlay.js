@@ -33,9 +33,9 @@ import Modal from './Modal';
 
 /**
  * @class Overlay
- * @extends {React.Component<Props>}
+ * @extends {React.PureComponent<Props>}
  */
-export default class Overlay extends React.Component {
+export default class Overlay extends React.PureComponent {
   static defaultProps = {
     isVisible: false,
     isModal: false,

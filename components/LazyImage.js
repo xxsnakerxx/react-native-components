@@ -25,9 +25,9 @@ import {
 
 /**
  * @class LazyImage
- * @extends {React.Component<LazyImageProps>}
+ * @extends {React.PureComponent<LazyImageProps>}
  */
-export default class LazyImage extends React.Component {
+export default class LazyImage extends React.PureComponent {
   static defaultProps = {
     placeholder: null,
     containerStyle: null,
@@ -45,13 +45,6 @@ export default class LazyImage extends React.Component {
     this.state = {
       opacity: new Animated.Value(0),
     };
-  }
-
-  /**
-   * @param {LazyImageProps} nextProps
-   */
-  shouldComponentUpdate(nextProps) {
-    return JSON.stringify(nextProps) !== JSON.stringify(this.props);
   }
 
   _onLoadStart = () => {

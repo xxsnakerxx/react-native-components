@@ -37,9 +37,9 @@ const AnimationType = {
 
 /**
  * @class Modal
- * @extends {React.Component<Props>}
+ * @extends {React.PureComponent<Props>}
  */
-export default class Modal extends React.Component {
+export default class Modal extends React.PureComponent {
   static defaultProps = {
     isVisible: false,
     isAnimated: true,
