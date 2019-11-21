@@ -49,24 +49,26 @@ describe('Portal', () => {
       ]);
   });
 
-  it('should throw error if Portal was not rendered', async () => {
+  it('should have correct behavior if it was not rendered', async () => {
     const { queryByText } = render(
       <View />,
     );
 
-    expect(() => Portal.showModal(
+    Portal.showModal(
       Portal.allocateTag(),
       (
         <Text>
           Modal 1
         </Text>
       ),
-    )).toThrow();
+    );
 
     expect(queryByText('Modal 1')).toBeFalsy();
 
-    expect(() => Portal.getOpenModals()).toThrow();
+    expect(Portal.getOpenModals()).toEqual([]);
 
-    expect(() => Portal.closeModal('__modal_1')).toThrow();
+    Portal.closeModal('__modal_1');
+
+    expect(Portal.getOpenModals()).toEqual([]);
   });
 });

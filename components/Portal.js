@@ -38,7 +38,12 @@ export default class Portal extends React.PureComponent {
    */
   static showModal = (tag, component) => {
     if (!portalRef) {
-      throw new Error('Calling showModal but no Portal has been rendered.');
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.warn('Calling showModal but no Portal has been rendered.');
+      }
+
+      return;
     }
 
     portalRef._showModal(tag, component);
@@ -49,7 +54,12 @@ export default class Portal extends React.PureComponent {
    */
   static closeModal = (tag) => {
     if (!portalRef) {
-      throw new Error('Calling closeModal but no Portal has been rendered.');
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.warn('Calling closeModal but no Portal has been rendered.');
+      }
+
+      return;
     }
 
     portalRef._closeModal(tag);
@@ -57,7 +67,12 @@ export default class Portal extends React.PureComponent {
 
   static getOpenModals = () => {
     if (!portalRef) {
-      throw new Error('Calling getOpenModals but no Portal has been rendered.');
+      if (process.env.NODE_ENV === 'development') {
+        // eslint-disable-next-line no-console
+        console.warn('Calling getOpenModals but no Portal has been rendered.');
+      }
+
+      return [];
     }
 
     return portalRef._getOpenModals();
