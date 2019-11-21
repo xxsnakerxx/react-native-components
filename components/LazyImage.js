@@ -169,5 +169,8 @@ const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
   },
-  image: { ...StyleSheet.absoluteFillObject },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'white',
+  },
 });
