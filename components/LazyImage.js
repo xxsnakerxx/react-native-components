@@ -105,6 +105,10 @@ export default class LazyImage extends React.PureComponent {
       source,
     } = this.props;
 
+    const { width, height } = e.nativeEvent.source;
+
+    if (width <= 1 || height <= 1) return;
+
     if (sourceIsCached(source)) {
       opacity.setValue(1);
     } else {
