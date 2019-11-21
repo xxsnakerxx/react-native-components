@@ -81,12 +81,14 @@ export default class Portal extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    portalRef = this;
-
     this.state = {
       /** @type {Object<string,ReactElement>} */
       modals: {},
     };
+  }
+
+  componentDidMount() {
+    portalRef = this;
   }
 
   componentWillUnmount() {
