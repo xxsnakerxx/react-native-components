@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   TouchableOpacity,
-  View,
   Text,
   StyleSheet,
 } from 'react-native';
@@ -52,37 +51,25 @@ const Button = (props) => {
       activeOpacity={!touchableProps.onPress ? 1 : undefined}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...touchableProps}
+      style={[
+        containerStyle,
+        _disabledContainerStyle,
+      ]}
     >
       {
         isTextButton
           ? (
-            <View
+            <Text
               style={[
-                containerStyle,
-                _disabledContainerStyle,
-              ]}
-            >
-              <Text
-                style={[
-                  styles.text,
-                  textStyle,
-                  _disabledTextStyle,
-                ]}
-              >
-                {children}
-              </Text>
-            </View>
-          )
-          : (
-            <View
-              style={[
-                containerStyle,
-                _disabledContainerStyle,
+                styles.text,
+                textStyle,
+                _disabledTextStyle,
               ]}
             >
               {children}
-            </View>
+            </Text>
           )
+          : children
       }
     </TouchableOpacity>
   );
