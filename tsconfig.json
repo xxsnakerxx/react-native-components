@@ -1,19 +1,12 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "target": "esnext",
-    "module": "commonjs",
-    "lib": ["ES2016"],
+    "module": "esnext",
+    "lib": ["esnext"],
     "jsx": "react-native",
-    "baseUrl": ".",
-    "declaration": true,
-    "outDir": "dist",
+    "baseUrl": "."
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "**/__tests__"
-  ]
+  "exclude": ["**/__tests__"]
 }

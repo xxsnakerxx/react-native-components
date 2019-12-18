@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-import {render, fireEvent} from '../../test-utils';
+import {render, fireEvent} from '../../../test-utils';
 
 import Button from '../Button';
 

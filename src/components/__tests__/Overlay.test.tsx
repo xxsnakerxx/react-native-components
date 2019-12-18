@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import mockdate from 'mockdate';
 
-import {render, fireEvent} from '../../test-utils';
+import {render, fireEvent} from '../../../test-utils';
 
 import Overlay from '../Overlay';
 

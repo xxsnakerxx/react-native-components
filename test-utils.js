@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from '@testing-library/react-native';
-import {Portal} from './index';
+import {Portal} from './src/index';
 
 const Wrapper = ({children}) => (
   <>

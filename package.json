@@ -5,16 +5,23 @@
   "repository": "https://github.com/xxsnakerxx/react-native-components.git",
   "author": "Dmitriy Kolesnikov <xxsnakerxx@gmail.com>",
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/commonjs/index.js",
+  "module": "lib/module/index.js",
+  "react-native": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "files": [
+    "src",
+    "lib"
+  ],
   "scripts": {
     "test": "yarn lint && yarn tsc --noEmit && jest",
     "lint": "eslint ./",
     "release": "yarn test && yarn publish && git push && git push --tags",
-    "prepublish": "rimraf ./dist/* && tsc"
+    "prepublish": "bob build"
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
+    "@react-native-community/bob": "^0.7.0",
     "@react-native-community/eslint-config": "^0.0.5",
     "@testing-library/react-native": "^5.0.3",
     "@types/jest": "^24.0.24",
@@ -33,5 +40,14 @@
     "rimraf": "^3.0.0",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.3"
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
   }
 }

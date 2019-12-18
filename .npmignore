@@ -7,3 +7,4 @@ jest*
 __tests__
 __mocks__
 yarn.lock
+*.log

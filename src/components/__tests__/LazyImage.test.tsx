@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text} from 'react-native';
 
-import {render} from '../../test-utils';
+import {render} from '../../../test-utils';
 
 import LazyImage from '../LazyImage';
 
