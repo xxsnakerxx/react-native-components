@@ -46,7 +46,7 @@ interface LazyImageProps {
   containerStyle?: StyleProp<ViewStyle>;
 }
 
-type Props = LazyImageProps & ImageProps;
+export type Props = LazyImageProps & ImageProps;
 
 interface State {
   opacity: Animated.Value;

@@ -13,7 +13,7 @@ import Portal from './Portal';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-interface Props {
+export interface Props {
   isVisible?: boolean;
   isAnimated?: boolean;
   animationType?: 'pushToTop' | 'fade';

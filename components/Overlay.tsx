@@ -14,7 +14,7 @@ import {
 
 import Modal from './Modal';
 
-interface Props {
+export interface Props {
   isVisible?: boolean;
   isModal?: boolean;
   showSpinner?: boolean;

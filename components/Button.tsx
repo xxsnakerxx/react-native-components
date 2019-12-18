@@ -17,7 +17,7 @@ interface ButtonProps {
   disabledTextStyle?: StyleProp<TextStyle>;
 }
 
-type Props = TouchableOpacityProps & ButtonProps;
+export type Props = TouchableOpacityProps & ButtonProps;
 
 const Button: React.FC<Props> = props => {
   const {
