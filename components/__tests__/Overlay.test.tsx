@@ -1,8 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 import mockdate from 'mockdate';
 
-import { render, fireEvent } from '../../test-utils';
+import {render, fireEvent} from '../../test-utils';
 
 import Overlay from '../Overlay';
 
@@ -12,11 +12,9 @@ beforeEach(() => {
 
 describe('Overlay', () => {
   it('should renders correctly if is not modal', async () => {
-    const { queryByTestId } = render(
+    const {queryByTestId} = render(
       <View>
-        <Overlay
-          isVisible
-        />
+        <Overlay isVisible />
       </View>,
     );
 
@@ -25,40 +23,27 @@ describe('Overlay', () => {
   });
 
   it('should renders correctly if is modal', async () => {
-    const { queryByTestId } = render(
-      <Overlay
-        isModal
-        isVisible
-      />,
-    );
+    const {queryByTestId} = render(<Overlay isModal isVisible />);
 
     expect(queryByTestId('Modal')).toBeTruthy();
     expect(queryByTestId('Overlay')).toBeTruthy();
   });
 
   it('should correctly handle isVisible prop if is not modal', async () => {
-    const { queryByTestId, rerender } = render(
-      <Overlay />,
-    );
+    const {queryByTestId, rerender} = render(<Overlay />);
 
     expect(queryByTestId('Overlay')).toBeTruthy();
 
-    rerender(
-      <Overlay
-        isVisible
-      />,
-    );
+    rerender(<Overlay isVisible />);
 
+    // @ts-ignore
     global.timeTravel(300);
 
     expect(queryByTestId('Overlay')).toBeTruthy();
 
-    rerender(
-      <Overlay
-        isVisible={false}
-      />,
-    );
+    rerender(<Overlay isVisible={false} />);
 
+    // @ts-ignore
     global.timeTravel(300);
 
     jest.runAllTimers();
@@ -70,12 +55,8 @@ describe('Overlay', () => {
     const onShow = jest.fn();
     const onHide = jest.fn();
 
-    const { queryByTestId, rerender } = render(
-      <Overlay
-        isModal
-        onShow={onShow}
-        onHide={onHide}
-      />,
+    const {queryByTestId, rerender} = render(
+      <Overlay isModal onShow={onShow} onHide={onHide} />,
     );
 
     expect(queryByTestId('Modal')).toBeFalsy();
@@ -83,15 +64,9 @@ describe('Overlay', () => {
     expect(onShow).toHaveBeenCalledTimes(0);
     expect(onHide).toHaveBeenCalledTimes(0);
 
-    rerender(
-      <Overlay
-        isModal
-        onShow={onShow}
-        onHide={onHide}
-        isVisible
-      />,
-    );
+    rerender(<Overlay isModal onShow={onShow} onHide={onHide} isVisible />);
 
+    // @ts-ignore
     global.timeTravel(300);
 
     expect(queryByTestId('Modal')).toBeTruthy();
@@ -100,14 +75,10 @@ describe('Overlay', () => {
     expect(onHide).toHaveBeenCalledTimes(0);
 
     rerender(
-      <Overlay
-        isModal
-        onShow={onShow}
-        onHide={onHide}
-        isVisible={false}
-      />,
+      <Overlay isModal onShow={onShow} onHide={onHide} isVisible={false} />,
     );
 
+    // @ts-ignore
     global.timeTravel(300);
 
     jest.runAllTimers();
@@ -119,17 +90,12 @@ describe('Overlay', () => {
   });
 
   it('should correctly handle show/hide methods via ref', async () => {
-    const ref = React.createRef();
+    const ref: React.RefObject<Overlay> = React.createRef();
     const onShow = jest.fn();
     const onHide = jest.fn();
 
-    const { queryByTestId } = render(
-      <Overlay
-        ref={ref}
-        onShow={onShow}
-        onHide={onHide}
-        isModal
-      />,
+    const {queryByTestId} = render(
+      <Overlay ref={ref} onShow={onShow} onHide={onHide} isModal />,
     );
 
     expect(queryByTestId('Modal')).toBeFalsy();
@@ -139,6 +105,7 @@ describe('Overlay', () => {
 
     ref.current.show();
 
+    // @ts-ignore
     global.timeTravel(300);
 
     expect(queryByTestId('Modal')).toBeTruthy();
@@ -148,6 +115,7 @@ describe('Overlay', () => {
 
     ref.current.hide();
 
+    // @ts-ignore
     global.timeTravel(300);
 
     jest.runAllTimers();
@@ -159,11 +127,7 @@ describe('Overlay', () => {
   });
 
   it('should render spinner', async () => {
-    const { queryByTestId } = render(
-      <Overlay
-        showSpinner
-      />,
-    );
+    const {queryByTestId} = render(<Overlay showSpinner />);
 
     expect(queryByTestId('SpinnerContainer')).toBeTruthy();
   });
@@ -171,9 +135,11 @@ describe('Overlay', () => {
   it('should handle press', async () => {
     let pressed = false;
 
-    const { queryByTestId } = render(
+    const {queryByTestId} = render(
       <Overlay
-        onPress={() => { pressed = true; }}
+        onPress={() => {
+          pressed = true;
+        }}
       />,
     );
 

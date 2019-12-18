@@ -1,5 +1,8 @@
 .eslintignore
 babel.config.js
+tsconfig.json
+test-utils.js
+.eslint
 jest*
 __tests__
 __mocks__

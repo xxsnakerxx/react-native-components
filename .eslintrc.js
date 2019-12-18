@@ -1,11 +1,8 @@
 module.exports = {
-  extends: '@xxsnakerxx/eslint-config/react-native',
+  root: true,
+  extends: '@react-native-community',
 
-  rules: {
-    'import/no-unresolved': 0,
-    'import/named': 0,
-    'import/no-named-as-default-member': 0,
-
-    'react/prop-types': 0,
+  globals: {
+    jest: true,
   },
 };

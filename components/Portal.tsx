@@ -8,38 +8,24 @@
  *
  */
 
-import React from 'react';
+import React, {ReactElement} from 'react';
 
-import {
-  StyleSheet,
-  View,
-} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
-/** @type Portal */
-let portalRef;
+let portalRef: Portal;
 
 let counter = 0;
 
-/**
- * @typedef {import("react").ReactElement<any>} ReactElement
- */
+interface State {
+  modals: {[key: string]: ReactElement};
+}
 
-/**
- * @class Portal
- * @extends {React.PureComponent<any>}
- */
-export default class Portal extends React.PureComponent {
-  // eslint-disable-next-line no-plusplus
+export default class Portal extends React.PureComponent<any, State> {
   static allocateTag = () => `__modal_${++counter}`;
 
-  /**
-   * @param {string} tag
-   * @param {ReactElement} component
-   */
-  static showModal = (tag, component) => {
+  static showModal = (tag: string, component: ReactElement<any>) => {
     if (!portalRef) {
       if (process.env.NODE_ENV === 'development') {
-        // eslint-disable-next-line no-console
         console.warn('Calling showModal but no Portal has been rendered.');
       }
 
@@ -47,15 +33,11 @@ export default class Portal extends React.PureComponent {
     }
 
     portalRef._showModal(tag, component);
-  }
+  };
 
-  /**
-   * @param {string} tag
-   */
-  static closeModal = (tag) => {
+  static closeModal = (tag: string) => {
     if (!portalRef) {
       if (process.env.NODE_ENV === 'development') {
-        // eslint-disable-next-line no-console
         console.warn('Calling closeModal but no Portal has been rendered.');
       }
 
@@ -63,12 +45,11 @@ export default class Portal extends React.PureComponent {
     }
 
     portalRef._closeModal(tag);
-  }
+  };
 
   static getOpenModals = () => {
     if (!portalRef) {
       if (process.env.NODE_ENV === 'development') {
-        // eslint-disable-next-line no-console
         console.warn('Calling getOpenModals but no Portal has been rendered.');
       }
 
@@ -76,18 +57,18 @@ export default class Portal extends React.PureComponent {
     }
 
     return portalRef._getOpenModals();
-  }
+  };
 
   constructor(props) {
     super(props);
 
     this.state = {
-      /** @type {Object<string,ReactElement>} */
       modals: {},
     };
   }
 
   componentDidMount() {
+    // eslint-disable-next-line consistent-this
     portalRef = this;
   }
 
@@ -96,14 +77,8 @@ export default class Portal extends React.PureComponent {
     counter = 0;
   }
 
-  /**
-   * @param {string} tag
-   * @param {ReactElement} component
-   */
-  _showModal(tag, component) {
-    const {
-      modals,
-    } = this.state;
+  _showModal(tag: string, component: ReactElement) {
+    const {modals} = this.state;
 
     this.setState({
       modals: {
@@ -113,15 +88,10 @@ export default class Portal extends React.PureComponent {
     });
   }
 
-  /**
-   * @param {string} tag
-   */
-  _closeModal(tag) {
-    const {
-      modals,
-    } = this.state;
+  _closeModal(tag: string) {
+    const {modals} = this.state;
 
-    const modalsCopy = { ...modals };
+    const modalsCopy = {...modals};
 
     if (!modalsCopy[tag]) {
       return;
@@ -135,33 +105,26 @@ export default class Portal extends React.PureComponent {
   }
 
   _getOpenModals() {
-    const {
-      modals,
-    } = this.state;
+    const {modals} = this.state;
 
     return Object.keys(modals);
   }
 
   render() {
-    const {
-      modals,
-    } = this.state;
+    const {modals} = this.state;
 
     if (!Object.keys(modals).length) {
       return null;
     }
 
     return (
-      <View
-        style={styles.modalsContainer}
-        pointerEvents="box-none"
-      >
-        {Object.keys(modals).map((tag) => ({ ...modals[tag], key: tag }))}
+      <View style={styles.modalsContainer} pointerEvents="box-none">
+        {Object.keys(modals).map(tag => ({...modals[tag], key: tag}))}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  modalsContainer: { ...StyleSheet.absoluteFillObject },
+  modalsContainer: {...StyleSheet.absoluteFillObject},
 });

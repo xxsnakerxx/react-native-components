@@ -4,25 +4,34 @@
   "description": "Some components for React Native",
   "repository": "https://github.com/xxsnakerxx/react-native-components.git",
   "author": "Dmitriy Kolesnikov <xxsnakerxx@gmail.com>",
-  "main": "index.js",
   "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "yarn lint && jest",
+    "test": "yarn lint && yarn tsc --noEmit && jest",
     "lint": "eslint ./",
-    "release": "yarn test && yarn publish && git push && git push --tags"
+    "release": "yarn test && yarn publish && git push && git push --tags",
+    "prepublish": "rimraf ./dist/* && tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
+    "@react-native-community/eslint-config": "^0.0.5",
     "@testing-library/react-native": "^5.0.1",
-    "@types/jest": "^24.0.23",
-    "@xxsnakerxx/eslint-config": "^1.1.4",
+    "@types/jest": "^24.0.24",
+    "@types/node": "^12.12.21",
+    "@types/react": "^16.9.16",
+    "@types/react-native": "^0.60.25",
     "babel-jest": "^24.9.0",
     "eslint": "^6.6.0",
+    "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
     "mockdate": "^2.0.5",
     "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "^0.61.4",
-    "react-test-renderer": "16.9.0"
+    "react-test-renderer": "16.9.0",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.3"
   }
 }
