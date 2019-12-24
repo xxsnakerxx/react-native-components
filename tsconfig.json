@@ -6,7 +6,10 @@
     "module": "esnext",
     "lib": ["esnext"],
     "jsx": "react-native",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true
   },
   "exclude": ["**/__tests__"]
 }
