@@ -8,28 +8,28 @@
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
   "react-native": "lib/module/index.js",
-  "types": "lib/typescript/src/index.d.ts",
+  "types": "lib/typescript/index.d.ts",
   "files": [
     "src",
     "lib"
   ],
   "scripts": {
-    "test": "yarn lint && yarn tsc --noEmit && jest",
+    "test": "yarn lint && yarn tsc && jest",
     "lint": "eslint ./",
     "release": "yarn test && yarn publish && git push && git push --tags",
     "prepublish": "bob build"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.5",
+    "@babel/core": "^7.7.7",
     "@react-native-community/bob": "^0.7.0",
     "@react-native-community/eslint-config": "^0.0.5",
     "@testing-library/react-native": "^5.0.3",
     "@types/jest": "^24.0.24",
-    "@types/node": "^12.12.21",
-    "@types/react": "^16.9.16",
-    "@types/react-native": "^0.60.25",
+    "@types/node": "^13.1.0",
+    "@types/react": "^16.9.17",
+    "@types/react-native": "^0.60.26",
     "babel-jest": "^24.9.0",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
     "mockdate": "^2.0.5",
@@ -39,7 +39,7 @@
     "react-test-renderer": "16.9.0",
     "rimraf": "^3.0.0",
     "ts-jest": "^24.2.0",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.4"
   },
   "@react-native-community/bob": {
     "source": "src",
