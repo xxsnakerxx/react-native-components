@@ -8,7 +8,6 @@
     "jsx": "react-native",
     "baseUrl": ".",
     "strict": true,
-    "noEmit": true,
     "skipLibCheck": true
   },
   "exclude": ["**/__tests__"]

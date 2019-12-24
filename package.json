@@ -14,7 +14,7 @@
     "lib"
   ],
   "scripts": {
-    "test": "yarn lint && yarn tsc && jest",
+    "test": "yarn lint && yarn tsc --noEmit && jest",
     "lint": "eslint ./",
     "release": "yarn test && yarn publish && git push && git push --tags",
     "prepublish": "bob build"
