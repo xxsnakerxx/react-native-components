@@ -32,13 +32,12 @@ interface State {
 }
 
 export default class Overlay extends React.PureComponent<Props, State> {
-  static defaultProps: Props = {
+  static defaultProps = {
     isVisible: false,
     isModal: false,
     showSpinner: false,
     spinnerColor: 'white',
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
-    style: null,
     onPress: () => {},
     onShow: () => {},
     onHide: () => {},
@@ -92,7 +91,7 @@ export default class Overlay extends React.PureComponent<Props, State> {
   _onPress = (e: GestureResponderEvent) => {
     const {onPress} = this.props;
 
-    onPress(e);
+    onPress!(e);
   };
 
   _renderOverlay = () => {
@@ -155,7 +154,7 @@ export default class Overlay extends React.PureComponent<Props, State> {
       duration: 300,
       useNativeDriver: true,
     }).start(() => {
-      onShow();
+      onShow!();
     });
   }
 
@@ -174,7 +173,7 @@ export default class Overlay extends React.PureComponent<Props, State> {
           isVisible: false,
         });
 
-        onHide();
+        onHide!();
       }
     });
   }

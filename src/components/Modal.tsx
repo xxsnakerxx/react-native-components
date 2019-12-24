@@ -25,13 +25,13 @@ interface State {
 }
 
 export default class Modal extends React.PureComponent<Props, State> {
-  static defaultProps: Props = {
+  static defaultProps = {
     isVisible: false,
     isAnimated: true,
     animationType: 'pushToTop',
   };
 
-  _tag: string;
+  _tag: string = '';
 
   constructor(props: Props) {
     super(props);
@@ -90,7 +90,7 @@ export default class Modal extends React.PureComponent<Props, State> {
     InteractionManager.runAfterInteractions(() => {
       Portal.closeModal(this._tag);
 
-      this._tag = null;
+      this._tag = '';
     });
   }
 

@@ -21,7 +21,7 @@ const sourceIsCached = (source: ImageSourcePropType): boolean => {
   }
 
   if (typeof source !== 'number' && !Array.isArray(source)) {
-    return cache.includes(source.uri);
+    return !!source.uri && cache.includes(source.uri);
   }
 
   // @ts-ignore
@@ -33,7 +33,7 @@ const cacheSource = (source: ImageSourcePropType) => {
     return;
   }
 
-  if (typeof source !== 'number' && !Array.isArray(source)) {
+  if (typeof source !== 'number' && !Array.isArray(source) && source.uri) {
     cache.push(source.uri);
   }
 
@@ -53,10 +53,8 @@ interface State {
 }
 
 export default class LazyImage extends React.PureComponent<Props, State> {
-  static defaultProps: Props = {
-    source: null,
+  static defaultProps = {
     placeholder: null,
-    containerStyle: null,
     resizeMode: 'cover',
     onLoad: () => {},
     onLoadStart: () => {},
@@ -77,7 +75,7 @@ export default class LazyImage extends React.PureComponent<Props, State> {
 
     opacity.setValue(+sourceIsCached(source));
 
-    onLoadStart();
+    onLoadStart!();
   };
 
   _onLoad = (e: NativeSyntheticEvent<ImageLoadEventData>) => {
@@ -102,7 +100,7 @@ export default class LazyImage extends React.PureComponent<Props, State> {
           duration: 300,
           useNativeDriver: Platform.OS === 'ios',
         }).start(() => {
-          onLoad(e);
+          onLoad!(e);
         });
       });
     }
@@ -116,7 +114,9 @@ export default class LazyImage extends React.PureComponent<Props, State> {
     const {opacity} = this.state;
 
     return (
-      <View testID="LazyImage" style={[containerStyle, styles.container]}>
+      <View
+        testID="LazyImage"
+        style={[StyleSheet.flatten(containerStyle), styles.container]}>
         {placeholder}
         <Animated.Image
           {...imageProps}

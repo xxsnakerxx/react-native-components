@@ -41,9 +41,14 @@ const Button: React.FC<Props> = props => {
       testID="Button"
       activeOpacity={!touchableProps.onPress ? 1 : undefined}
       {...touchableProps}
-      style={[containerStyle, _disabledContainerStyle]}>
+      style={StyleSheet.flatten([containerStyle, _disabledContainerStyle])}>
       {isTextButton ? (
-        <Text style={[styles.text, textStyle, _disabledTextStyle]}>
+        <Text
+          style={[
+            styles.text,
+            StyleSheet.flatten(textStyle),
+            StyleSheet.flatten(_disabledTextStyle),
+          ]}>
           {children}
         </Text>
       ) : (

@@ -12,7 +12,7 @@ import React, {ReactElement} from 'react';
 
 import {StyleSheet, View} from 'react-native';
 
-let portalRef: Portal;
+let portalRef: Portal | null;
 
 let counter = 0;
 
@@ -59,7 +59,7 @@ export default class Portal extends React.PureComponent<any, State> {
     return portalRef._getOpenModals();
   };
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
 
     this.state = {
