@@ -103,7 +103,6 @@ export default class Overlay extends React.PureComponent<Props, State> {
       <View
         testID="Overlay"
         pointerEvents={isVisible ? 'auto' : 'none'}
-        removeClippedSubviews={!isVisible}
         style={[
           styles.overlay,
           !isModal
