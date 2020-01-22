@@ -68,6 +68,14 @@ export default class LazyImage extends React.PureComponent<Props, State> {
     };
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
+    const {opacity} = this.state;
+
+    if (!sourceIsCached(nextProps.source)) {
+      opacity.setValue(0);
+    }
+  }
+
   _onLoadStart = () => {
     const {opacity} = this.state;
 
