@@ -9,6 +9,8 @@ import {
   InteractionManager,
 } from 'react-native';
 
+type AnimatedView = Animated.AnimatedComponent<View>;
+
 import Portal from './Portal';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -99,10 +101,12 @@ export default class Modal extends React.PureComponent<Props, State> {
 
     const {y, opacity} = this.state;
 
-    /** @type {AnimatedView | View} */
-    const ModalView = isAnimated ? Animated.View : View;
+    const ModalView: AnimatedView | typeof View = isAnimated
+      ? Animated.View
+      : View;
 
     return (
+      // @ts-ignore
       <ModalView
         testID="Modal"
         style={[
@@ -116,7 +120,7 @@ export default class Modal extends React.PureComponent<Props, State> {
                 ],
                 opacity,
               }
-            : {},
+            : null,
         ]}>
         {children}
       </ModalView>

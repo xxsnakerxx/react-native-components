@@ -19,7 +19,7 @@ interface ButtonProps {
 
 export type Props = TouchableOpacityProps & ButtonProps;
 
-const Button: React.FC<Props> = props => {
+const Button: React.FC<Props> = (props) => {
   const {
     containerStyle,
     textStyle,
@@ -41,14 +41,9 @@ const Button: React.FC<Props> = props => {
       testID="Button"
       activeOpacity={!touchableProps.onPress ? 1 : undefined}
       {...touchableProps}
-      style={StyleSheet.flatten([containerStyle, _disabledContainerStyle])}>
+      style={[containerStyle, _disabledContainerStyle]}>
       {isTextButton ? (
-        <Text
-          style={[
-            styles.text,
-            StyleSheet.flatten(textStyle),
-            StyleSheet.flatten(_disabledTextStyle),
-          ]}>
+        <Text style={[styles.text, textStyle, _disabledTextStyle]}>
           {children}
         </Text>
       ) : (

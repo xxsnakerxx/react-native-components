@@ -106,7 +106,7 @@ export default class LazyImage extends React.PureComponent<Props, State> {
         Animated.timing(opacity, {
           toValue: 1,
           duration: 300,
-          useNativeDriver: Platform.OS === 'ios',
+          useNativeDriver: true,
         }).start(() => {
           onLoad!(e);
         });
@@ -122,9 +122,7 @@ export default class LazyImage extends React.PureComponent<Props, State> {
     const {opacity} = this.state;
 
     return (
-      <View
-        testID="LazyImage"
-        style={[StyleSheet.flatten(containerStyle), styles.container]}>
+      <View testID="LazyImage" style={[containerStyle, styles.container]}>
         {placeholder}
         <Animated.Image
           {...imageProps}

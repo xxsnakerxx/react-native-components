@@ -119,7 +119,7 @@ export default class Portal extends React.PureComponent<any, State> {
 
     return (
       <View style={styles.modalsContainer} pointerEvents="box-none">
-        {Object.keys(modals).map(tag => ({...modals[tag], key: tag}))}
+        {Object.keys(modals).map((tag) => ({...modals[tag], key: tag}))}
       </View>
     );
   }

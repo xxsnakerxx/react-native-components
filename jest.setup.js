@@ -2,7 +2,7 @@ const mockdate = require('mockdate');
 
 const frameTime = 10;
 
-global.requestAnimationFrame = cb => {
+global.requestAnimationFrame = (cb) => {
   // Default implementation of requestAnimationFrame calls setTimeout(cb, 0),
   // which will result in a cascade of timers - this generally pisses off test runners
   // like Jest who watch the number of timers created and assume an infinite recursion situation
