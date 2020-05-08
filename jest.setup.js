@@ -32,3 +32,9 @@ global.timeTravel = (time = frameTime) => {
     tickTravel();
   }
 };
+
+// https://github.com/facebook/react-native/issues/27721#issuecomment-609052183
+jest.mock(
+  'react-native/Libraries/Components/Touchable/TouchableOpacity',
+  () => 'TouchableOpacity',
+);
