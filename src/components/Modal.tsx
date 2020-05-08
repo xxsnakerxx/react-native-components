@@ -9,7 +9,7 @@ import {
   InteractionManager,
 } from 'react-native';
 
-type AnimatedView = Animated.AnimatedComponent<View>;
+type AnimatedView = Animated.AnimatedComponent<typeof View>;
 
 import Portal from './Portal';
 
