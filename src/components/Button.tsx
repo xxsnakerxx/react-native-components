@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 
 import {
   TouchableOpacity,
@@ -10,28 +10,7 @@ import {
   TextStyle,
 } from 'react-native';
 
-export const useTimeBlockedCallback = (
-  callback?: (...args: any[]) => void,
-  timeBlocked = 500,
-) => {
-  const isBlockedRef = useRef(false);
-
-  if (!callback) {
-    return () => {};
-  }
-
-  return (...callbackArgs: any[]) => {
-    if (!isBlockedRef.current) {
-      callback(...callbackArgs);
-    }
-
-    setTimeout(() => {
-      isBlockedRef.current = false;
-    }, timeBlocked);
-
-    isBlockedRef.current = true;
-  };
-};
+import {useTimeBlockedCallback} from 'src/utils';
 
 interface ButtonProps {
   containerStyle?: StyleProp<ViewStyle>;
