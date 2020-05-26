@@ -1,19 +1,19 @@
 import {useRef, useCallback} from 'react';
 
 export const useTimeBlockedCallback = (
-  callback?: (...args: any[]) => void,
+  cb?: (...args: any[]) => void,
   timeBlocked = 500,
 ) => {
   const isBlockedRef = useRef(false);
 
-  const callbackHook = useCallback(
-    (...callbackArgs: any[]) => {
-      if (!callback) {
+  const callback = useCallback(
+    (...cbArgs: any[]) => {
+      if (!cb) {
         return;
       }
 
       if (!isBlockedRef.current) {
-        callback(...callbackArgs);
+        cb(...cbArgs);
       }
 
       setTimeout(() => {
@@ -22,8 +22,8 @@ export const useTimeBlockedCallback = (
 
       isBlockedRef.current = true;
     },
-    [callback, timeBlocked],
+    [cb, timeBlocked],
   );
 
-  return callbackHook;
+  return callback;
 };
