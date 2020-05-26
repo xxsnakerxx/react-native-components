@@ -10,7 +10,7 @@ import {
   TextStyle,
 } from 'react-native';
 
-import {useTimeBlockedCallback} from 'src/utils';
+import {useTimeBlockedCallback} from '../utils';
 
 interface ButtonProps {
   containerStyle?: StyleProp<ViewStyle>;
