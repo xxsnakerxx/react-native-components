@@ -49,6 +49,33 @@ describe('Button', () => {
     expect(pressed).toBeTruthy();
   });
 
+  it('should handle fast double press', async () => {
+    let pressed = [];
+
+    jest.useFakeTimers();
+
+    const {queryByTestId} = render(
+      <Button
+        onPress={() => {
+          pressed.push('pressed');
+        }}>
+        Text
+      </Button>,
+    );
+
+    fireEvent.press(queryByTestId('Button'));
+    fireEvent.press(queryByTestId('Button'));
+
+    expect(pressed.length).toBe(1);
+
+    jest.runOnlyPendingTimers();
+
+    fireEvent.press(queryByTestId('Button'));
+    fireEvent.press(queryByTestId('Button'));
+
+    expect(pressed.length).toBe(2);
+  });
+
   it('should handle correctly disabled prop', async () => {
     let pressed = false;
 
