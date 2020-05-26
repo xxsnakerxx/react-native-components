@@ -4,7 +4,6 @@ import {
   StyleSheet,
   View,
   Animated,
-  Platform,
   ImageSourcePropType,
   ImageProps,
   StyleProp,
