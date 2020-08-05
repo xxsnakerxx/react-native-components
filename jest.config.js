@@ -1,10 +1,8 @@
-const jestPreset = require('@testing-library/react-native/jest-preset');
-
 module.exports = {
   name: '@xxsnakerxx/react-native-components',
-  preset: '@testing-library/react-native',
+  preset: 'react-native',
   timers: 'fake',
-  setupFiles: [...jestPreset.setupFiles, './jest.setup.js'],
-  setupFilesAfterEnv: ['@testing-library/react-native/cleanup-after-each'],
+  setupFiles: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['@testing-library/jest-native/extend-expect'],
   testPathIgnorePatterns: ['/node_modules', '/test-utils.js'],
 };
