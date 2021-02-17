@@ -167,14 +167,12 @@ export default class Overlay extends React.PureComponent<Props, State> {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
-    }).start(({finished}) => {
-      if (finished) {
-        this.setState({
-          isVisible: false,
-        });
+    }).start(() => {
+      this.setState({
+        isVisible: false,
+      });
 
-        onHide!();
-      }
+      onHide!();
     });
   }
 
